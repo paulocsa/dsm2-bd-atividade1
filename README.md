@@ -112,7 +112,8 @@ SELECT * FROM EP;
 
 ```  
 2. Realize uma listagem de todas as músicas cadastradas mostrando todos os campos.
-    ```bash
+
+```bash
     SELECT * FROM Musicas;
 ```
 
@@ -134,9 +135,8 @@ SELECT SUM(valorPago) AS TotalGasto FROM EP;
 
 ```
 6. Mostre todos os campos da música cujo campo codMusic seja igual a 5.
-   ```bash
+```bash
 SELECT * FROM Musicas WHERE codMusic = 5;
-
 ```
 7. Mostre todos os campos do EP cujo campo tempoMusic seja maior que 300
   ```bash
@@ -173,9 +173,8 @@ SELECT MAX(valorPago) AS ValorMaximoPago FROM EP;
 
 ```
 13. Retorne o menor tempo de reprodução entre as musicas
-    ```bash
+```bash
 SELECT MIN(tempoMusic) AS MenorTempoReproducao FROM Musicas;
-
 ```
 14. Retorne o valor médio pago pelos EP
 ```bash
