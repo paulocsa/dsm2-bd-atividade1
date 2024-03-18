@@ -20,7 +20,7 @@ CREATE TABLE EP (
     codEP INT PRIMARY KEY,
     nomeEP VARCHAR(50),
     dataCompra DATE,
-    valorPago DECIMAL(10,2),
+    valorPago REAL,
     album VARCHAR(50)
 );
 ```
@@ -35,8 +35,7 @@ CREATE TABLE Musicas (
     nomeMusic VARCHAR(50),
     artistaMusic VARCHAR(50),
     tempoMusic TIME,
-    PRIMARY KEY (codEP, codMusic),
-    FOREIGN KEY (codEP) REFERENCES EP(codEP)
+    PRIMARY KEY (codEP, codMusic)
 );
 
 );
@@ -56,8 +55,7 @@ CREATE TABLE Musicas (
 
 
 ```bash
-INSERT INTO EP (codEP, nomeEP, dataCompra, valorPago, album)
-VALUES
+INSERT INTO EP (codEP, nomeEP, dataCompra, valorPago, album) VALUES
 (1, 'Rita', '2021-02-01', 1.5, 'Acertou na Mosca'),
 (2, 'Pulei na Piscina', '2021-01-10', 1.8, 'Drive in 360'),
 (3, 'Alô Ambev', '2021-02-05', 2.5, 'Segue a vida'),
@@ -88,13 +86,13 @@ traços ( - ).
 
 
 ```bash
-INSERT INTO Musicas (codEP, codMusic, nomeMusic, artistaMusic, tempoMusic)
-VALUES
-(1, 6, 'Rita', 'Tierry', 249),
-(2, 8, 'Pulei na Piscina', 'Guilherme e Benuto', 301),
-(3, 5, 'Alô Ambev', 'Zé Neto e Cristiano', 249),
-(4, 2, 'Facas', 'Diego E Victor Hugo', 318),
-(5, 3, 'Lance Individual', 'Jorge e Mateus', 242);
+INSERT INTO Musicas (codEP, codMusic, nomeMusic, artistaMusic, tempoMusic) VALUES
+(1, 6, 'Rita', 'Tierry', '00:04:09'),
+(2, 8, 'Pulei na Piscina', 'Guilherme e Benuto', '00:05:01'),
+(3, 5, 'Alô Ambev', 'Zé Neto e Cristiano', '00:04:09'),
+(4, 2, 'Facas', 'Diego e Victor Hugo', '00:05:18'),
+(5, 3, 'Lance Individual', 'Jorge e Mateus', '00:04:02');
+
 ```
  
 
@@ -131,7 +129,7 @@ SELECT codMusic, nomeMusic, tempoMusic FROM Musicas ORDER BY tempoMusic ASC;
 ```
 5. Mostre o total gasto com a compra dos EP.
   ```bash
-SELECT SUM(valorPago) AS TotalGasto FROM EP;
+SELECT SUM(valorPago) AS total_gasto FROM EP;
 
 ```
 6. Mostre todos os campos da música cujo campo codMusic seja igual a 5.
@@ -140,20 +138,19 @@ SELECT * FROM Musicas WHERE codMusic = 5;
 ```
 7. Mostre todos os campos do EP cujo campo tempoMusic seja maior que 300
   ```bash
-SELECT * FROM EP WHERE codEP IN (SELECT codEP FROM Musicas WHERE tempoMusic > 300);
+SELECT * FROM EP WHERE codEP IN (SELECT codEP FROM Musicas WHERE tempoMusic > '00:05:00');
 
 ```
 8. Mostre todos os campos do EP cujo campo tempoMusic esteja entre 200 a 299
   ```bash
-SELECT * FROM EP WHERE codEP IN (SELECT codEP FROM Musicas WHERE tempoMusic BETWEEN 200 AND 299);
+SELECT * FROM EP WHERE codEP IN (SELECT codEP FROM Musicas WHERE tempoMusic BETWEEN '00:03:20' AND '00:04:59');
 
 ```
 9. Mostre todos os campos das Musicas e o EP cujos os campos codEP da tabela musica seja
 igual ao campo codEP da tabela ep.
 ```bash
-SELECT M.*, E.*
-FROM Musicas M
-JOIN EP E ON M.codEP = E.codEP;
+SELECT * Musicas, (SELECT * EP FROM EP WHERE EP.codEP = Musicas.codEP) AS EP_info
+FROM Musicas;
 
 ```
 10. Mostre somente os campos ArtistaMusic, nomeMusic da tabela Musicas
@@ -163,22 +160,22 @@ SELECT artistaMusic, nomeMusic FROM Musicas;
 ```
 11. Retorne a quantidade de registros existentes na tabela EP
   ```bash
-SELECT COUNT(*) AS QuantidadeRegistros FROM EP;
+SELECT COUNT(*) AS quantidade_registros FROM EP;
 
 ```
 12. Retorne o valor maximo pago pelo EP
 
   ```bash
-SELECT MAX(valorPago) AS ValorMaximoPago FROM EP;
+SELECT MAX(valorPago) AS valor_maximo_pago FROM EP;
 
 ```
 13. Retorne o menor tempo de reprodução entre as musicas
 ```bash
-SELECT MIN(tempoMusic) AS MenorTempoReproducao FROM Musicas;
+SELECT MIN(tempoMusic) AS menor_tempo_reproducao FROM Musicas;
 ```
 14. Retorne o valor médio pago pelos EP
 ```bash
-SELECT AVG(valorPago) AS ValorMedioPago FROM EP;
+SELECT AVG(valorPago) AS valor_medio_pago FROM EP;
 
 ```
 15. Mostre todos os campos da tabela EP retornando somente os EP vendidos entre 01/01/2020
