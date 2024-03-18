@@ -149,8 +149,7 @@ SELECT * FROM EP WHERE codEP IN (SELECT codEP FROM Musicas WHERE tempoMusic BETW
 9. Mostre todos os campos das Musicas e o EP cujos os campos codEP da tabela musica seja
 igual ao campo codEP da tabela ep.
 ```bash
-SELECT * Musicas, (SELECT * EP FROM EP WHERE EP.codEP = Musicas.codEP) AS EP_info
-FROM Musicas;
+SELECT * FROM Musicas, EP WHERE Musicas.codEP = EP.codEP;
 
 ```
 10. Mostre somente os campos ArtistaMusic, nomeMusic da tabela Musicas
